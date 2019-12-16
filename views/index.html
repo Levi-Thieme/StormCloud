@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Streamify</title>
+    <link rel="stylesheet" href="styles.css"></link>
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background: #333">
+    <nav class="navbar navbar-expand-sm">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                Videos: <select id="videoSelector"></select>
+            </li>
+            <li class="nav-item">
+                <button id="refreshBtn">Refresh Videos</button>
+            </li>
+            <li class="nav-item">
+                <button id="deleteBtn">Delete Video</button>
+            </li>
+        </ul>
+        <!-- search videos form
+        <form id="searchForm" class="form-inline" action="/action_page.php">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        -->
+        <form id="uploadForm" method="POST" enctype="multipart/form-data" class="form-inline" action="/videos/upload">
+            <input name="uploadedVideo" class="form-control mr-sm-2" type="file">
+            <button class="btn btn-success" type="submit">Upload</button>
+        </form>
+    </nav>
+        
+    <div id="playerContainer">
+        <video id="player" controls>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</body>
+</html>
