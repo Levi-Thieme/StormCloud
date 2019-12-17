@@ -11,12 +11,28 @@ it will not actually be deleted from the file system if a process has a handle
 to it. The file is deleted after all processes have released their handles to it.
 */
 const deletedVideos = new Array();
-
-app.use(express.static("./views"));
+app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "views/index.html"));
 });
+
+app.get("/browse", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/browse.html"));
+})
+
+app.get("/watch", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/watch.html"));
+})
+
+app.get("/watch/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/watch.html"));
+})
+
+app.get("/images/:name", (req, res) => {
+  const imagePath = path.join(__dirname, req.url);
+  res.sendFile(imagePath);
+})
 
 app.get("/video/:name", (req, res) => {
   let videoName = "video.mp4";
@@ -69,7 +85,27 @@ app.get("/videos", (req, res) => {
     }
     else {
       files = files.filter(file => !deletedVideos.includes(file));
-      res.send(files);
+      let videos = new Array();
+      files.forEach(file => {
+        let filename = file.replace("mp4", "jpg");
+        let thumbnailPath = path.join(__dirname, process.env.images_path, filename);
+        const exists = fs.existsSync(thumbnailPath);
+        if (exists) {
+          thumbnailPath = path.join(process.env.images_path, filename)
+        }
+        else {
+          thumbnailPath = process.env.default_thumbnail;
+        }
+        let video = {
+          title: file,
+          uploader: "John Doe",
+          uploadedAt: new Date(),
+          url: "/watch/" + file,
+          thumbnail: thumbnailPath
+        };
+        videos.push(video);
+      });
+      res.json(videos);
     }
   });
 });
