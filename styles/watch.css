@@ -1,0 +1,20 @@
+nav {
+    color: white;
+}
+
+#playerContainer {
+    display: block;
+    resize: both;
+}
+
+#player {
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    max-height: 650px;
+    display: block;
+    margin: 0 auto;
+    background: #111;
+    border: solid 2px black;
+    outline: none;
+}
