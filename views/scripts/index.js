@@ -56,9 +56,6 @@ function createVideoElement(video) {
     thumbnail.alt = "Thumbnail of the video.";
     link.appendChild(thumbnail);
     card.appendChild(link);
-    let footer = document.createElement("DIV");
-    footer.classList.add("card-footer");
-    footer.innerText = video.uploader + " at " + video.uploadedAt;
-    card.appendChild(footer);
+    
     return card;
 }
