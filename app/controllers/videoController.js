@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require("path");
 const fs = require("fs");
 const formidable = require("formidable");
+const Videos = require("../models/video.js");
 
 const videosPath = process.env.videos_path;
 const imagesPath = process.env.images_path;
@@ -20,7 +21,7 @@ videoController.getVideos = function (req, res) {
 			files = files.filter(file => !deletedVideos.includes(file));
 			let videos = new Array();
 			files.forEach(file => {
-				let filename = file.replace("mp4", "jpg");
+				let filename = file.split(".")[0] + ".jpg";
 				let thumbnailPath = process.env.default_thumbnail;
 				const exists = fs.existsSync(path.join(imagesPath, filename));
 				if (exists) {
@@ -117,15 +118,37 @@ videoController.upload = function (req, res) {
 			res.send(error);
 		}
 		else {
-			const t = "";
-			const oldpath = files.uploadedVideo.path;
-			const newpath = path.join(videosPath, files.uploadedVideo.name)
-			fs.rename(oldpath, newpath, function (error) {
+			const filename = files.uploadedVideo.name;
+			const videoPath = files.uploadedVideo.path;
+			const videoDestination = path.join(videosPath, filename)
+			fs.rename(videoPath, videoDestination, function (error) {
 				if (error) {
 					res.send(error);
 				}
 				else {
-					res.redirect("/");
+					const thumbnailName = files.uploadedThumbnail.name;
+					const thumbnailPath = files.uploadedThumbnail.path;
+					const thumbnailDestination = path.join(imagesPath, thumbnailName);
+					fs.rename(thumbnailPath, thumbnailDestination, function (error) {
+						if (error) {
+							res.send(error);
+						}
+						else {
+							let video = new Videos({
+								title: fields.title,
+								filename: filename,
+								thumbnail: thumbnailName
+							});
+							video.save((error, video) => {
+								if (error) {
+									res.send(error);
+								}
+								else {
+									res.redirect("/");
+								}
+							});
+						}
+					});
 				}
 			});
 		}

@@ -15,4 +15,11 @@ viewController.showWatch = function (req, res) {
     res.sendFile(path.join(__dirname, "../../views/html/watch.html"));
 }
 
+/*
+Sends the upload.html file.
+*/
+viewController.showUpload = function (req, res) {
+    res.sendFile(path.join(__dirname, "../../views/html/upload.html"));
+}
+
 module.exports = viewController;

@@ -56,6 +56,5 @@ function createVideoElement(video) {
     thumbnail.alt = "Thumbnail of the video.";
     link.appendChild(thumbnail);
     card.appendChild(link);
-    
     return card;
 }
