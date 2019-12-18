@@ -49,13 +49,12 @@ function createVideoElement(video) {
     header.innerText = video.title;
     card.appendChild(header);
     let link = document.createElement("A");
-    link.href = video.url;
+    link.href = "/watch/" + video.filename;
     let thumbnail = document.createElement("IMG");
     thumbnail.classList.add("img-thumbnail");
-    thumbnail.src = video.thumbnail;
+    thumbnail.src = "/images/" + video.thumbnail;
     thumbnail.alt = "Thumbnail of the video.";
     link.appendChild(thumbnail);
     card.appendChild(link);
-    
     return card;
 }
