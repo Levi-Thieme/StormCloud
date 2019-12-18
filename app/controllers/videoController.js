@@ -13,30 +13,15 @@ const deletedVideos = new Array();
 Returns all video objects.
 */
 videoController.getVideos = function (req, res) {
-    fs.readdir(videosPath, (error, files) => {
-        if (error) {
-        	res.send(error);
-        }
-        else {
-			files = files.filter(file => !deletedVideos.includes(file));
-			let videos = new Array();
-			files.forEach(file => {
-				let filename = file.split(".")[0] + ".jpg";
-				let thumbnailPath = process.env.default_thumbnail;
-				const exists = fs.existsSync(path.join(imagesPath, filename));
-				if (exists) {
-					thumbnailPath = filename;
-				}
-				let video = {
-					title: file.split(".")[0],
-					url: "/watch/" + file,
-					thumbnail: "images/" + thumbnailPath
-				};
-				videos.push(video);
-			});
-			res.json(videos);
-        }
-    });
+	Videos.find((error, videos) => {
+		if (error) {
+			res.status(500);
+			res.send([]);
+		}
+		else {
+			res.send(videos);
+		}
+	});
 }
 
 /*
@@ -113,6 +98,7 @@ Stores and uploaded video to the videos directory.
 */
 videoController.upload = function (req, res) {
 	const form = new formidable.IncomingForm();
+	form.maxFileSize = 4500 * 1024 * 1024;
 	form.parse(req, (error, fields, files) => {
 		if (error) {
 			res.send(error);
