@@ -33,7 +33,7 @@ videoController.getVideo = function (req, res) {
 	if (req.params.name) {
 		videoName = req.params.name;
 	}
-	const filepath =  path.join(videosPath, videoName);
+	const filepath =  path.resolve(videosPath, videoName);
 	fs.exists(filepath, (exists) => {
 		if (exists) {
 			const stat = fs.statSync(filepath)
@@ -100,7 +100,7 @@ videoController.upload = function (req, res) {
 	const form = new formidable.IncomingForm();
 	form.maxFileSize = 4500 * 1024 * 1024;
 	form.parse(req, (error, fields, files) => {
-		if (error) {
+		if (error || isInvalidFile(files.uploadedVideo) || isInvalidFile(files.uploadedThumbnail)) {
 			res.send(error);
 		}
 		else {
@@ -139,6 +139,10 @@ videoController.upload = function (req, res) {
 			});
 		}
 	});
+}
+
+function isInvalidFile(file) {
+	return file.size === 0;
 }
 
 module.exports = videoController;

@@ -17,25 +17,26 @@
         <div class="container">
           <h1 class="display-4">StormCloud</h1>
           <p class="lead">Upload</p>
-          <a href="/index">Home</a>
+          <a href="/index" data-testid="homeLink">Home</a>
         </div>
 	</div>
 	<div class="container">
-		<form class="form" method="POST" enctype="multipart/form-data" action="/videos/upload">
+		<form data-testid="uploadForm" class="form" method="POST" enctype="multipart/form-data" action="/videos/upload">
 			<div class="form-row justify-content-center">
 				<label>Title</label>
-				<input name="title" type="text" class="form-control">
+				<input name="title" data-testid="titleInput" type="text" class="form-control" required>
 			</div>
 			<div class="form-row justify-content-center">
 				<label for="videoInput">Video</label>
-				<input id="videoInput" name="uploadedVideo" type="file" class="form-control">
+				<input id="videoInput" data-testid="videoFileInput" name="uploadedVideo" type="file" class="form-control" required>
 			</div>
 			<div class="form-row justify-content-center">
 				<label>Thumbnail</label>
-				<input name="uploadedThumbnail" type="file" class="form-control">
+				<input name="uploadedThumbnail" data-testid="thumbnailFileInput" type="file" class="form-control" required>
 			</div>
 			<div class="form-row justify-content-center">
-				<button type="submit" class="btn btn-primary">Upload</button>
+				<button data-testid="uploadBtn" type="submit" class="btn btn-primary">Upload</button>
+				<span class="error"></span>
 			</div>
 		</form>
 	</div>

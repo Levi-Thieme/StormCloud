@@ -9,7 +9,7 @@ const imageController = {};
 Sends the requested file.
 */
 imageController.getImage = function (req, res) {
-	const imagePath = path.join(imagesPath, req.params.name);
+	const imagePath = path.resolve(imagesPath, req.params.name);
 	if (fs.exists(imagePath, (exists) => {
 		if (exists) {
 			res.sendFile(imagePath);

@@ -1,0 +1,7 @@
+[
+    { "title": "Rocky IV", "filename": "rocky.mp4", "thumbnail": "rocky.png"},
+    { "title": "Lord of The Rings", "filename": "lotr.mp4", "thumbnail": "lotr.png"},
+    { "title": "Titanic", "filename": "titanic.mp4", "thumbnail": "titanic.png"},
+    { "title": "Coco", "filename": "coco.mp4", "thumbnail": "coco.png"},
+    { "title": "Star Wars Ep. 6", "filename": "sw.mp4", "thumbnail": "sw.png"}
+]
